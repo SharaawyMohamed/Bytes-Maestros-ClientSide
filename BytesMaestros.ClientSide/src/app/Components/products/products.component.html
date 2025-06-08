@@ -1,11 +1,13 @@
 <div class="container">
-  <!-- Status Section -->
     <div class="status-section mb-4 p-3 bg-light rounded">
        <h2 class="mb-3">Response Status</h2>
        <p><strong>Status Code:</strong> {{ Products?.statusCode }}</p>
        <p><strong>Message:</strong> {{ Products?.message }}</p>
     </div>
 
+    <div class="my-card-desing d-flex justify-content-end ">
+       <button class="text-end add-card-button" (click)="navigateToCard()">My Card</button>
+    </div>
   @if (errors.length > 0) {
     <div class="error-section alert alert-danger mb-4">
       <h3 class="mb-2">Errors</h3>
@@ -39,11 +41,18 @@
           <p class="product-price">
             <span class="discounted-price text-success fw-bold">
               {{ product.price | currency }}
-            </span>
+            </span><br>
+            <label>Quantity:</label>
+            <input type="number"
+                [value]="productQuantities.get(product.id) || 1"
+                (input)="productQuantities.set(product.id, $any($event.target).valueAsNumber)"
+                placeholder="Enter quantity" />
           </p>
+          <button class="add-card-button type-button" (click)="addToCard(product)">Add to Cart</button>
         </div>
       </div>
     </div>
+
   }
 </div>
   </div>

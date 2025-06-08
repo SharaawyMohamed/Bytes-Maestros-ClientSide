@@ -1,1 +1,26 @@
-<p>card works!</p>
+
+
+  @if (products.length) {
+    <div class="data-section">
+      <h2 class="mb-4">Type Data</h2>
+        @for (item of products; track item) {
+          <div class="card type-card">
+            <div class="type-image">
+              <img
+                [src]="item[0].imageUrl"
+                class="product-image"
+                alt="{{ item[0].name }}"
+              />
+            </div>
+            <div class="card-body">
+              <h3 class="type-name">{{ item[0].name }}</h3>
+              <p class="type-description">{{ item[0].description }}</p>
+              <p class="product-price">
+              <h3>Total Amount:<span class="discounted-price" >{{ item[0].price*item[1] | currency }}</span></h3>
+
+            <span>Quantity: {{item[1]}}</span>
+        </div>
+            </div>
+        }
+      </div>
+  }
