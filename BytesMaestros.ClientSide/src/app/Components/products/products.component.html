@@ -1,0 +1,50 @@
+<div class="container">
+  <!-- Status Section -->
+    <div class="status-section mb-4 p-3 bg-light rounded">
+       <h2 class="mb-3">Response Status</h2>
+       <p><strong>Status Code:</strong> {{ Products?.statusCode }}</p>
+       <p><strong>Message:</strong> {{ Products?.message }}</p>
+    </div>
+
+  @if (errors.length > 0) {
+    <div class="error-section alert alert-danger mb-4">
+      <h3 class="mb-2">Errors</h3>
+      <ul class="mb-0">
+        @for (error of errors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  <div class="data-section">
+    <h2 class="mb-4">Products (Type ID: {{ typeId }})</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+  @for (product of Products?.data; track product.id) {
+    <div class="col">
+      <div class="card product-card shadow-sm border-0 rounded">
+        <img
+          [src]="product.imageUrl"
+          class="card-img-top rounded-top product-image"
+          alt="Product Image"
+          appCardstyle
+        />
+        <div class="card-body text-center">
+          <h5 class="product-name">{{ product.name }}</h5>
+          <p class="product-category text-muted small">Description: {{ product.description }}</p>
+          <p class="product-quantity small" [class.text-danger]="product.stock == 0">
+            In-Stock: {{ product.stock }}
+          </p>
+
+          <p class="product-price">
+            <span class="discounted-price text-success fw-bold">
+              {{ product.price | currency }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+  </div>
+</div>
