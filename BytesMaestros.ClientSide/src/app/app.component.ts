@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { HomeComponent } from './Components/home/home.component';
 import { OrderComponent } from './Components/order/order.component';
 import { CardComponent } from './Components/card/card.component';
@@ -12,5 +12,12 @@ import { ProductsComponent } from './Components/products/products.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
   title = 'BytesMaestros.ClientSide';
+  
+  constructor(private _router:Router){}
+   navigateToTypes() {
+    this._router.navigate(['/home']);
+  }
 }
+

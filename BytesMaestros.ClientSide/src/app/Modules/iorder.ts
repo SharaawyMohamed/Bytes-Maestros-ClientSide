@@ -3,8 +3,8 @@ import { IOrderItem } from "./iorder-item";
 export interface IOrder {
   customerName: string;
   customerEmail: string;
-  customerPhone: string;
+  customerPhoneNumber: string;
   customerAddress: string;
   orderTypeId:number;
-  orderItems: IOrderItem[];
+  items: IOrderItem[];
 }

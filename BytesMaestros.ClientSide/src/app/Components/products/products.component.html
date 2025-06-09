@@ -44,7 +44,7 @@
             </span><br>
             <label>Quantity:</label>
             <input type="number"
-                [value]="productQuantities.get(product.id) || 1"
+                [value]="productQuantities.get(product.id) || 0"
                 (input)="productQuantities.set(product.id, $any($event.target).valueAsNumber)"
                 placeholder="Enter quantity" />
           </p>

@@ -5,6 +5,7 @@ import { OrderComponent } from './Components/order/order.component';
 import { CardComponent } from './Components/card/card.component';
 import { ProductsComponent } from './Components/products/products.component';
 import { AppComponent } from './app.component';
+import { OrderDetailsComponent } from './Components/order-details/order-details.component';
 
 export const routes: Routes = [
   {path:'',component:AppComponent,children:[
@@ -12,5 +13,6 @@ export const routes: Routes = [
     {path:'order',component:OrderComponent,title:'Order'},
     {path:'card',component:CardComponent,title:'Card'},
     {path:'products',component:ProductsComponent,title:'Products'},
+    {path:'order-details',component:OrderDetailsComponent,title:'Order-Details'}
   ]}
 ];

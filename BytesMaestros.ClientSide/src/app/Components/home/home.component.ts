@@ -13,10 +13,13 @@ import { CommonModule } from '@angular/common'; // Add for standalone component
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  public Types?: ITypeResponse;
+  public Types: ITypeResponse|any;
   public objects: IType[] = [];
 
-  constructor(private _typeService: TypeService,private _router: Router) {}
+  constructor(
+    private _typeService: TypeService,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getTypes();
@@ -27,7 +30,6 @@ export class HomeComponent {
       next: (data: ITypeResponse) => {
         this.Types = data;
         this.objects = data.data;
-        console.log("Types: ", data);
       },
       error: (er) => {
         console.error("Error:", er);
@@ -36,7 +38,7 @@ export class HomeComponent {
   }
 
   navigateToProducts(typeId: number) {
-  this._router.navigate(['/products'], { queryParams: { typeId: typeId } });
+    this._router.navigate(['/products'], { queryParams: { typeId: typeId } });
   }
 
 }

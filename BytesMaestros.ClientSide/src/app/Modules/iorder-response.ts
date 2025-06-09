@@ -1,7 +1,7 @@
 import { HttpStatusCode } from "@angular/common/http";
 
 export interface IOrderResponse {
-  statusCode:HttpStatusCode;
+  statusCode:number;
   message:string;
   data:Date[];
   word?:string;

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IOrderResponse } from '../../Modules/iorder-response';
-import { IOrderItem } from '../../Modules/iorder-item';
-import { IOrder } from '../../Modules/iorder';
 import { IScheduleDeliveryResponse } from '../../Modules/ischedule-delivery-response';
 import { OrderService } from '../../Services/order.service';
+import { ScheduleShardServiceService } from '../../Services/schedule-shard-service.service';
+import { OrderDetailsService } from '../../Services/order-details.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -11,20 +12,49 @@ import { OrderService } from '../../Services/order.service';
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
-export class OrderComponent {
-   public timeSlots!:IOrderResponse;
-   public OrderItems:IOrderItem[] = [];
-   public Order!:IOrder
-   public scheduledOrder!:IScheduleDeliveryResponse
+export class OrderComponent implements OnInit {
+   public Response:IOrderResponse|any;
+   public timeSlots:Date[]=[];
+   public message:string='';
+   public statusCode?:number;
+   public word:string='';
+   public errors:string[]=[];
+   constructor(
+     private _orderService:OrderService,
+     private _scheduleSharedService:ScheduleShardServiceService,
+     private _orderDetailsService:OrderDetailsService,
+     private _router:Router
+    ) {}
 
-   constructor(private _orderService:OrderService) {}
+  ngOnInit(): void {
 
-    createOrder(){
-      this.Order.orderItems=this.OrderItems;
-      this._orderService.createOrder(this.Order).subscribe({
-        next:(data:IOrderResponse)=>{
-          this.timeSlots=data;
-          console.log("Order Created:",data);
+    this.Response=this._scheduleSharedService.getOrderResponse();
+
+    if(this.Response){
+
+      console.log("OrderResponse:",this.Response);
+      this.timeSlots=this.Response.data;
+      this.message=this.Response.message;
+      this.word=this.Response.word;
+      this.errors=this.Response.errors;
+      this.statusCode=this.Response.HttpStatusCode;
+
+    }else{
+      console.warn("Response Not Passed!!")
+    }
+  }
+
+  scheduleOrderDateTime(slot:Date){
+
+   const scheduleOrder={
+        orderId:this.word,
+        deliveryDate:slot
+      };
+
+   this._orderService.scheduleOrderDevliveryTime(scheduleOrder).subscribe({
+        next:(data:IScheduleDeliveryResponse)=>{
+        this._orderDetailsService.setOrderDetails(data);
+        this._router.navigate(['/order-details']);
         },
         error:(er)=>{
           console.error("Error:",er);
@@ -32,6 +62,4 @@ export class OrderComponent {
       });
     }
 
-    scheduleOrder(){
-    }
 }

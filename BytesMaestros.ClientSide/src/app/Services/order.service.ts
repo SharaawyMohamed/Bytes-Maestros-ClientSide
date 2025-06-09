@@ -12,12 +12,12 @@ import { IScheduleDeliveryResponse } from '../Modules/ischedule-delivery-respons
 export class OrderService {
   constructor(private http:HttpClient) { }
   createOrder(order:IOrder){
-    return this.http.post<IOrderResponse>(`${environment.baseURL}`,order);
+    return this.http.post<IOrderResponse>(`${environment.baseURL}Order`,order);
   }
 
-  identityOrderDevliveryTime(deliverySlot:IScheduleDeliveryRequest){
+  scheduleOrderDevliveryTime(deliverySlot:IScheduleDeliveryRequest){
     return this.http.post<IScheduleDeliveryResponse>(`${environment.baseURL}Order/schedule-delivery`,deliverySlot);
   }
 
-  
+
 }

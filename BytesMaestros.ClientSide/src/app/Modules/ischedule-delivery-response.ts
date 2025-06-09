@@ -1,5 +1,4 @@
 import { HttpStatusCode } from "@angular/common/http";
-import { IOrderResponse } from "./iorder-response";
 
 export interface IScheduleDeliveryResponse {
   statusCode: HttpStatusCode;

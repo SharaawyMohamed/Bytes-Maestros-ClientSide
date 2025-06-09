@@ -17,16 +17,17 @@ import { IOrder } from '../../Modules/iorder';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  public Products?: IProductResponse;
+  public Products: IProductResponse|any;
   public typeId: number = 0;
   public errors: string[] = [];
-  public product?:IProduct;
-  public quantity:number=1;
+  public product:IProduct|any;
+  public quantity:number=0;
   public cardItems:IOrderItem[]=[];
-  public orderItems:[IProduct,number][] = [];
+  public orderProducts:[IProduct,number][] = [];
   public productQuantities: Map<string, number> = new Map();
-  constructor(private _productService: ProductService,
-    _orderService:OrderService,
+
+  constructor(
+    private _productService: ProductService,
     private _route: ActivatedRoute,
     private _router:Router,
     private _shardDataService:SharedDataServiceService
@@ -38,25 +39,12 @@ export class ProductsComponent implements OnInit {
       this.getProducts();
     });
   }
-  addToCard(product: IProduct) {
-    const quantity = this.productQuantities.get(product.id) || 1;
-    var isFound= this.cardItems.some(item => item.productId === product.id);
-    if(isFound==false && quantity>0){
 
-      const orderItem:IOrderItem={
-      productId: product.id,
-      quantity: quantity
-    };
-    this.cardItems.push(orderItem);
-    this.orderItems.push([product, quantity]);
-    }
-
-  }
   getProducts() {
         this._productService.getProducts(this.typeId, 20, 1).subscribe({
         next: (data: IProductResponse) => {
         this.Products = data;
-        this.errors = data.error ||[];;
+        this.errors = data.error || [];;
         console.log("Products: ", data);
       },
       error: (er) => {
@@ -64,8 +52,24 @@ export class ProductsComponent implements OnInit {
       }
     });
   }
+    addToCard(product: IProduct) {
+    const quantity = this.productQuantities.get(product.id) || 0;
+    var isFound= this.cardItems.some(item => item.productId === product.id);
+
+    if(isFound==false && quantity>0){
+      const orderItem = {
+      productId: product.id,
+      quantity: quantity
+    };
+
+    this.cardItems.push(orderItem);
+    this.orderProducts.push([product, quantity]);
+
+  }
+
+  }
   navigateToCard() {
-    this._shardDataService.setData(this.cardItems, this.orderItems);
+    this._shardDataService.setData(this.cardItems, this.orderProducts,this.typeId);
     this._router.navigate(['/card']);
   }
 }

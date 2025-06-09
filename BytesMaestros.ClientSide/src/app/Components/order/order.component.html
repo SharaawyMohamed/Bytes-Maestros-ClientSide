@@ -1,1 +1,31 @@
-<p>order works!</p>
+<div class="container">
+    <div class="status-box">
+        <h2>Order Status</h2>
+        <div class="status-details">
+            <p><span class="label">Status:</span> {{ Response.statusCode }}</p>
+            <p><span class="label">Message:</span> {{ message }}</p>
+        </div>
+    </div>
+
+    @if (errors.length > 0) {
+    <div class="error-box">
+        <h3>Errors</h3>
+        <ul>
+            @for (error of errors; track error) {
+            <li>{{ error }}</li>
+            }
+        </ul>
+    </div>
+    }
+
+    <div class="time-slots-container">
+        <h2>Select Delivery Time</h2>
+        <div class="time-slots-grid">
+            @for (slot of timeSlots; track slot) {
+            <div class="time-slot" (click)="scheduleOrderDateTime(slot)">
+                {{ slot  }}
+            </div>
+            }
+        </div>
+    </div>
+</div>
