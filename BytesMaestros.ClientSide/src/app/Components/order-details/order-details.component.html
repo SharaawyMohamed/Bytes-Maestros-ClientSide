@@ -1,15 +1,36 @@
 <div class="container">
     <div class="status-section mb-4 p-3 bg-light rounded">
+      <div class="orders-email-input">
+           <input
+               type="email"
+               class="email-input"
+               placeholder="Enter customer email"
+               [(ngModel)]="emailForOrders"
+               required
+            />
+           <button class="submit-button" (click)="loadCustomerOrders()">
+             <span class="button-icon">📦</span>
+              ReSchedule Your Orders With Green Delivery Time
+             </button>
+      </div>
        <h2 class="mb-3">Response Status</h2>
        <p><strong>Status Code:</strong> {{ statusCode }}</p>
        <p><strong>Message:</strong> {{ message }}</p>
     </div>
     <div class="status-section mb-4 p-3 bg-light rounded">
-       <h2 class="mb-3">Customer Data</h2>
-       <p><strong>Your Name:</strong> {{ customerName }}</p>
-       <p><strong>Your Address:</strong> {{ customerAddress }}</p>
-       <p><strong>Your Email:</strong> {{ customerEmail }}</p>
-       <p><strong>Order Total Amount:</strong>{{ orderTotalAmount}}</p>
+       <div class="message-section mb-4 p-3 rounded">
+<h2 class="text-success" style="color: rgb(138, 196, 138);">
+  Order Scheduled Successfully!
+</h2></div>
+
+<div class="customer-section mb-4 p-3 rounded">
+    <h3>Customer Details</h3>
+    <p><strong>Name:</strong> {{ customerName }}</p>
+    <p><strong>Address:</strong> {{ customerAddress }}</p>
+    <p><strong>Email:</strong> {{ customerEmail }}</p>
+    <p><strong>Total:</strong> ${{ orderTotalAmount }}</p>
+</div>
+
       </div>
 
   @if (errors.length) {

@@ -1,9 +1,23 @@
 <div class="container">
-
+    <div class="status-section mb-4 p-3 bg-light rounded">
+      <div class="status-section mb-4 p-3 bg-light rounded">
+         <div class="orders-email-input">
+           <input
+               type="email"
+               class="email-input"
+               placeholder="Enter customer email"
+               [(ngModel)]="emailforOrders"
+               required
+            />
+           <button class="submit-button" (click)="loadCustomerOrders()">
+             <span class="button-icon">📦</span>
+              ReSchedule Your Orders With Green Delivery Time
+             </button>
+      </div>
 
   @if (products.length) {
     <div class="data-section">
-      <h2 class="mb-4">Type Data</h2>
+      <h2 class="mb-4">Card Items</h2>
         @for (item of products; track item) {
           <div class="card type-card">
             <div class="type-image">
@@ -25,6 +39,7 @@
         }
       </div>
   }
+
 
 <div class="card p-3 mb-4">
   <h3>Schedule Your Order</h3>

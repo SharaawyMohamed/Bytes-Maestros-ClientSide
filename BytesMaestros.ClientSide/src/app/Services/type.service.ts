@@ -10,4 +10,5 @@ export class TypeService {
 constructor(private http:HttpClient){}
   getTypes() {
     return this.http.get<ITypeResponse>(`${environment.baseURL}Type`);
-  }}
+  }
+}

@@ -1,0 +1,65 @@
+<div class="container">
+  @if (data) {
+    <div class="customer-info-section">
+      <h2>Customer Information</h2>
+      <div class="card customer-card">
+        <div class="customer-details">
+          <p><strong>Name:</strong> {{ data.customerName }}</p>
+          <p><strong>Email:</strong> {{ data.customerEmail }}</p>
+          <p><strong>Address:</strong> {{ data.customerAddress }}</p>
+          <p><strong>Green Delivery Time Recommended:</strong> {{ data.bestDelivaryTime  }}</p>
+          <div class="button-container debug-border">
+            <button class="btn btn-primary mt-3" (click)="navigateGreenDelivery()">
+               Schedule All Orders With Green Delivery Time
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="orders-section">
+      <h2>Customer Orders</h2>
+      @for (order of data.customerOrders; track order.id) {
+        <div class="card order-card">
+          <div class="order-header">
+            <div class="order-meta">
+              <span class="order-id"><strong>Order ID:</strong> {{ order.id }}</span>
+            </div>
+            <div class="order-summary">
+              <span><strong>Total Amount:</strong> {{ order.totalAmount }}</span>
+              <span><strong>Delivery Time:</strong> {{ order.deliveryTime }}</span>
+            </div>
+          </div>
+
+          <div class="order-items">
+            <h4>Order Items</h4>
+            @for (item of order.orderItems; track item.id) {
+              <div class="order-item">
+                <div class="item-info">
+                  <span class="item-name"><strong>Product Name:</strong> {{ item.productName }}</span><br>
+                  <span class="item-quantity"><strong>Quantity:</strong> {{ item.quantity }}</span><br>
+                </div>
+                <div class="item-price">Total Price: {{ item.totalPrice }}</div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+  @else if (customerCardOrders?.errors?.length) {
+    <div class="error-section alert alert-danger mb-4">
+      <h3 class="mb-2">Errors</h3>
+      <ul class="mb-0 dangr">
+        @for (error of customerCardOrders?.errors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+   @else {
+    <div class="loading-section">
+      <p>Loading customer orders...</p>
+    </div>
+  }
+</div>

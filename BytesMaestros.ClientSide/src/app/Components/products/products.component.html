@@ -1,8 +1,21 @@
 <div class="container">
     <div class="status-section mb-4 p-3 bg-light rounded">
+      <div class="orders-email-input">
+           <input
+               type="email"
+               class="email-input"
+               placeholder="Enter customer email"
+               [(ngModel)]="customerEmail"
+               required
+            />
+           <button class="submit-button" (click)="loadCustomerOrders()">
+             <span class="button-icon">📦</span>
+              ReSchedule Your Orders With Green Delivery Time
+             </button>
+      </div>
        <h2 class="mb-3">Response Status</h2>
-       <p><strong>Status Code:</strong> {{ Products?.statusCode }}</p>
-       <p><strong>Message:</strong> {{ Products?.message }}</p>
+       <p><strong>Status Code:</strong> {{ products?.statusCode }}</p>
+       <p><strong>Message:</strong> {{ products?.message }}</p>
     </div>
 
     <div class="my-card-desing d-flex justify-content-end ">
@@ -22,7 +35,7 @@
   <div class="data-section">
     <h2 class="mb-4">Products (Type ID: {{ typeId }})</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-  @for (product of Products?.data; track product.id) {
+  @for (product of products?.data; track product.id) {
     <div class="col">
       <div class="card product-card shadow-sm border-0 rounded">
         <img

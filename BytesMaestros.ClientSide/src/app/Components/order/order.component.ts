@@ -5,10 +5,11 @@ import { OrderService } from '../../Services/order.service';
 import { ScheduleShardServiceService } from '../../Services/schedule-shard-service.service';
 import { OrderDetailsService } from '../../Services/order-details.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-order',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css'
 })
@@ -19,6 +20,7 @@ export class OrderComponent implements OnInit {
    public statusCode?:number;
    public word:string='';
    public errors:string[]=[];
+   public customerEmail:string='';
    constructor(
      private _orderService:OrderService,
      private _scheduleSharedService:ScheduleShardServiceService,
@@ -61,5 +63,13 @@ export class OrderComponent implements OnInit {
         }
       });
     }
+
+  loadCustomerOrders() {
+    if (this.customerEmail) {
+      this._router.navigate(['/customer-orders'], { queryParams: { email: this.customerEmail } });
+    } else {
+      alert('Please enter an email');
+    }
+  }
 
 }

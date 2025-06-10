@@ -1,0 +1,31 @@
+<div class="confirmation-container">
+  <div class="header">
+    <h2>Green Delivery Confirmation</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="customer-info">
+    <p><strong>Email:</strong> {{email}}</p>
+    <p><strong>Green Delivery Date:</strong> {{greenDeliveryDate}}</p>
+  </div>
+
+  @if (response) {
+    <p>{{response.message}}</p>
+  }
+  @if (response?.errors?.length) {
+    <div class="error-section alert alert-danger mb-4">
+      <h3 class="mb-2">Errors</h3>
+      <ul class="mb-0">
+        @for (error of response?.errors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  <div class="info-box">
+    <h3>About Green Delivery</h3>
+    <p>By choosing green delivery, you're helping us reduce carbon emissions by optimizing our delivery routes.</p>
+    <p>Thank you for supporting our sustainability efforts!</p>
+  </div>
+</div>

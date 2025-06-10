@@ -1,31 +1,46 @@
 <div class="container">
     <div class="status-section mb-4 p-3 bg-light rounded">
-       <h2 class="mb-3">Response Status</h2>
-       <p><strong>Status Code:</strong> {{ Types?.statusCode }}</p>
-       <p><strong>Message:</strong> {{ Types?.message }}</p>
+      <div class="status-section mb-4 p-3 bg-light rounded">
+         <div class="orders-email-input">
+           <input
+               type="email"
+               class="email-input"
+               placeholder="Enter customer email"
+               [(ngModel)]="customerEmail"
+               required
+            />
+           <button class="submit-button" (click)="loadCustomerOrders()">
+             <span class="button-icon">📦</span>
+              ReSchedule Your Orders With Green Delivery Time
+             </button>
+      </div>
     </div>
+       <h2 class="mb-3">Response Status</h2>
+       <p><strong>Status Code:</strong> {{ types?.statusCode }}</p>
+       <p><strong>Message:</strong> {{ types?.message }}</p>
+  </div>
 
-  @if (Types?.error?.length) {
+  @if (types?.error?.length) {
     <div class="error-section alert alert-danger mb-4">
       <h3 class="mb-2">Errors</h3>
       <ul class="mb-0">
-        @for (error of Types?.error; track error) {
+        @for (error of types?.error; track error) {
           <li>{{ error }}</li>
         }
       </ul>
     </div>
   }
 
-  @if (Types?.data?.length) {
+  @if (types?.data?.length) {
     <div class="data-section">
       <h2 class="mb-4">Type Data</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        @for (item of Types?.data; track item.id) {
+      <div class="card-grid">
+        @for (item of types?.data; track item.id) {
           <div class="card type-card">
-            <div class="type-image">
+            <div class="type-image-container">
               <img
                 [src]="item.imageUrl"
-                class="product-image"
+                class="type-image"
                 alt="{{ item.name }}"
               />
             </div>

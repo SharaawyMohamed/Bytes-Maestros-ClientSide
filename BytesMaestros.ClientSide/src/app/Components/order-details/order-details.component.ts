@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { IScheduleDeliveryResponse, Item } from '../../Modules/ischedule-delivery-response';
 import { ScheduleShardServiceService } from '../../Services/schedule-shard-service.service';
 import { OrderDetailsService } from '../../Services/order-details.service';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-details',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './order-details.component.html',
   styleUrl: './order-details.component.css'
 })
@@ -21,11 +23,12 @@ export class OrderDetailsComponent implements OnInit {
   public statusCode:number=0;
   public errors:string[]=[];
   public items:Item[]=[];
+  public emailForOrders:string='';
 
    public orderDetails:IScheduleDeliveryResponse|any;
 
 
-   constructor(private _orderDetailsService:OrderDetailsService){}
+   constructor(private _orderDetailsService:OrderDetailsService,private _router:Router){}
 
   ngOnInit(): void {
     this.orderDetails=this._orderDetailsService.getOrderDetails();
@@ -51,6 +54,14 @@ export class OrderDetailsComponent implements OnInit {
     else
     {
       console.log('No order details available from service');
+    }
+  }
+
+  loadCustomerOrders() {
+    if (this.emailForOrders) {
+      this._router.navigate(['/customer-orders'], { queryParams: { email: this.emailForOrders } });
+    } else {
+      alert('Please enter an email');
     }
   }
 

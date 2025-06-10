@@ -20,9 +20,10 @@ export class CardComponent implements OnInit {
   public products: [IProduct, number][] = [];
   public items: IOrderItem[] = [];
   public response:IOrderResponse|undefined;
-  public customerName = '';
-  public customerAddress = '';
-  public customerEmail = '';
+  public customerName:string= '';
+  public customerAddress:string = '';
+  public customerEmail:string = '';
+  public emailforOrders:string='';
 
   constructor(
     private _sharedData: SharedDataServiceService,
@@ -47,18 +48,23 @@ export class CardComponent implements OnInit {
       orderTypeId: this._sharedData.getTypeId()
     };
 
-
     this._orderService.createOrder(order).subscribe({
       next: (data:IOrderResponse) => {
         this.response=data;
         this._scheduleSharedService.setSheduleOrderResponse(data);
-        console.log("Order Response",this._scheduleSharedService.getOrderResponse())
         this._router.navigate(['/order'])
       },
       error: (error) => {
         console.error("Order error:", error);
       }
     });
+  }
 
+  loadCustomerOrders() {
+    if (this.emailforOrders) {
+      this._router.navigate(['/customer-orders'], { queryParams: { email: this.emailforOrders } });
+    } else {
+      alert('Please enter an email');
+    }
   }
 }
